@@ -1,4 +1,4 @@
-package com.luckuless.code.moviewatchlist;
+package com.luckuless.code.moviewatchlist.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

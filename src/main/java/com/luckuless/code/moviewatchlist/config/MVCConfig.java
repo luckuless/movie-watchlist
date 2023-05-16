@@ -1,4 +1,4 @@
-package com.luckuless.code.moviewatchlist;
+package com.luckuless.code.moviewatchlist.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

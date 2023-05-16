@@ -1,4 +1,4 @@
-package com.luckuless.code.moviewatchlist;
+package com.luckuless.code.moviewatchlist.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

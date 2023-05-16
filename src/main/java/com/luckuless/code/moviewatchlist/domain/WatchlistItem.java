@@ -1,7 +1,10 @@
-package com.luckuless.code.moviewatchlist;
+package com.luckuless.code.moviewatchlist.domain;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.luckuless.code.moviewatchlist.validation.GoodMovie;
+import com.luckuless.code.moviewatchlist.validation.Priority;
 
 @GoodMovie
 public class WatchlistItem {

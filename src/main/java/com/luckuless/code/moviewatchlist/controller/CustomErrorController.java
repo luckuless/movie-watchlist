@@ -1,4 +1,4 @@
-package com.luckuless.code.moviewatchlist;
+package com.luckuless.code.moviewatchlist.controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;

@@ -1,15 +1,23 @@
 package com.luckuless.code.moviewatchlist;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+@GoodMovie
 public class WatchlistItem {
 
 	private Integer id;
 	
+    @NotBlank( message = "Please enter the title")
 	private String title;
 	
+	@NotBlank(message = "Please enter a rating")
 	private String rating; 
 	
+	@Priority
 	private String priority;
 	
+    @Size(max=50,  message = "Comment should be maximum 50 characters")
 	private String comment;
 	
 	public static int index = 0;

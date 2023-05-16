@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,11 +43,20 @@ public class WatchlistController {
 		} else {
 			model.put("watchlistItem", watchlistItem);
 		}
-		return new ModelAndView("watchlistItemForm" , model);
+		return new ModelAndView("watchlistItem" , model);
 	}
 
     @PostMapping("/watchlistItemForm")
-	public ModelAndView submitWatchlistItemForm(WatchlistItem watchlistItem) {
+	public ModelAndView submitWatchlistItemForm(@Valid WatchlistItem watchlistItem, BindingResult bindingResult) {
+	
+		if (bindingResult.hasErrors()) {
+            return new ModelAndView("watchlistItem");
+        }
+
+		if (itemAlreadyExists(watchlistItem.getTitle())) {
+			bindingResult.rejectValue("title", "", "This movie is already on your watchlist");
+            return new ModelAndView("watchlistItem");
+		}
 		
 		WatchlistItem existingItem = findWatchlistItemById(watchlistItem.getId());
 		
@@ -71,5 +83,15 @@ public class WatchlistController {
 			}
 		}
 		return null;
+	}
+
+	private boolean itemAlreadyExists(String title) {
+		
+		for (WatchlistItem watchlistItem : watchlistItems) {
+			if (watchlistItem.getTitle().equals(title)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

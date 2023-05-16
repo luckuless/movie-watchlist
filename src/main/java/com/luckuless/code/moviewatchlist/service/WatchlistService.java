@@ -9,7 +9,10 @@ import com.luckuless.code.moviewatchlist.domain.WatchlistItem;
 import com.luckuless.code.moviewatchlist.exception.DuplicateTitleException;
 import com.luckuless.code.moviewatchlist.repository.WatchlistRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class WatchlistService {
 
 	private final WatchlistRepository watchlistRepository;
@@ -27,6 +30,7 @@ public class WatchlistService {
 			Optional<String> movieRating = movieRatingService.getMovieRating(watchlistItem.getTitle());
 			if (movieRating.isPresent()) {
 				watchlistItem.setRating(movieRating.get());
+				log.info("Rating found for movie {}", watchlistItem.getTitle());
 			}
 		}
 		return watchlistItems;
@@ -45,15 +49,19 @@ public class WatchlistService {
 		WatchlistItem existingItem = findWatchlistItemById(watchlistItem.getId());
 		
 		if (existingItem == null) {
+			log.info("Check for duplicate title");
 			if (watchlistRepository.findByTitle(watchlistItem.getTitle())!=null) {
 				throw new DuplicateTitleException();
 			}
+
+			log.info("Inserting review for {}", watchlistItem.getTitle());
 			watchlistRepository.addItem(watchlistItem);
 		} else {
 			existingItem.setComment(watchlistItem.getComment());
 			existingItem.setPriority(watchlistItem.getPriority());
 			existingItem.setRating(watchlistItem.getRating());
 			existingItem.setTitle(watchlistItem.getTitle());  
+			log.info("Updating review for {}", watchlistItem.getTitle());
 		}
 	}
 }

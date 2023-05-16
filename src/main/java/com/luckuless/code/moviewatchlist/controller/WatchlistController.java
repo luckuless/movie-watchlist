@@ -22,8 +22,12 @@ import com.luckuless.code.moviewatchlist.service.WatchlistService;
 @Controller
 public class WatchlistController {
 	
-	private WatchlistService watchlistService = new WatchlistService();
-	
+	private final WatchlistService watchlistService;
+
+	public WatchlistController(WatchlistService watchlistService) {
+		this.watchlistService = watchlistService;
+	}
+
 	@GetMapping("/watchlistItemForm")
 	public ModelAndView showWatchlistItemForm(@RequestParam(required = false) Integer id) {
 		

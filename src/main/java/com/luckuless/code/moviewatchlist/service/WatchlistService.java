@@ -1,19 +1,35 @@
 package com.luckuless.code.moviewatchlist.service;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Service;
 
 import com.luckuless.code.moviewatchlist.domain.WatchlistItem;
 import com.luckuless.code.moviewatchlist.exception.DuplicateTitleException;
 import com.luckuless.code.moviewatchlist.repository.WatchlistRepository;
 
+@Service
 public class WatchlistService {
 
-	WatchlistRepository watchlistRepository = new WatchlistRepository();
-	
-	public List<WatchlistItem> getWatchlistItems(){
-		return watchlistRepository.getList();
+	private final WatchlistRepository watchlistRepository;
+	private final MovieRatingService movieRatingService;
+
+	public WatchlistService(WatchlistRepository watchlistRepository, MovieRatingService movieRatingService) {
+		this.watchlistRepository = watchlistRepository;
+		this.movieRatingService = movieRatingService;
+	}
+
+	public List<WatchlistItem> getWatchlistItems() {
+		List<WatchlistItem> watchlistItems = watchlistRepository.getList();
+				
+		for (WatchlistItem watchlistItem : watchlistItems) {
+			Optional<String> movieRating = movieRatingService.getMovieRating(watchlistItem.getTitle());
+			if (movieRating.isPresent()) {
+				watchlistItem.setRating(movieRating.get());
+			}
+		}
+		return watchlistItems;
 	}
 	
 	public int getWatchlistItemsSize() {

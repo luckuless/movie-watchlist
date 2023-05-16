@@ -3,9 +3,11 @@ package com.luckuless.code.moviewatchlist.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.luckuless.code.moviewatchlist.domain.WatchlistItem;
 
-
+@Repository
 public class WatchlistRepository {
 	private List<WatchlistItem> watchlistItems = new ArrayList<WatchlistItem>();
 	private static int index = 1;
